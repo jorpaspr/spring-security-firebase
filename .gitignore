@@ -16,4 +16,5 @@ build
 coverage
 dist
 .idea
-gradle
+*.iml
+.DS_Store
