@@ -15,7 +15,7 @@ apply plugin: 'war'
 
 war {
     baseName = 'spring-security-firebase'
-    version =  '0.0.3'
+    version = '0.0.3'
 }
 
 configurations {
@@ -33,7 +33,7 @@ repositories {
 
 eclipse {
     classpath {
-       downloadSources=true
+        downloadSources = true
     }
 }
 
@@ -43,13 +43,13 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile 'commons-io:commons-io:2.5'
-    
+
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-    
+
 
     compile 'com.google.firebase:firebase-admin:4.0.3'
     compileOnly "org.projectlombok:lombok:1.16.12"
-    
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile("org.springframework.security:spring-security-test")
 }
