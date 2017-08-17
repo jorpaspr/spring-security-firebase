@@ -11,11 +11,6 @@ public class FirebaseUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private final boolean enabled = true;
-    private final boolean credentialsNonExpired = true;
-    private final boolean accountNonLocked = true;
-    private final boolean accountNonExpired = true;
-    private final String password = null;
     private final String username;
     private final String id;
 
@@ -37,26 +32,26 @@ public class FirebaseUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

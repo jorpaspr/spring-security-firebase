@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.6.RELEASE")
     }
 }
 
@@ -33,10 +33,10 @@ repositories {
 
 eclipse {
     classpath {
+        downloadJavadoc = true
         downloadSources = true
     }
 }
-
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
@@ -46,8 +46,7 @@ dependencies {
 
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
-
-    compile 'com.google.firebase:firebase-admin:4.0.3'
+    compile 'com.google.firebase:firebase-admin:5.3.0'
     compileOnly "org.projectlombok:lombok:1.16.12"
 
     testCompile('org.springframework.boot:spring-boot-starter-test')

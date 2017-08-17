@@ -1,0 +1,3 @@
+firebase:
+  database-url: "https://mydatabaseurl.firebaseio.com/"
+  service-account-key: "src/main/resources/serviceAccountKey.json"

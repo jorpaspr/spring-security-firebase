@@ -3,6 +3,8 @@ package io.github.awaters1;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseCredentials;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -12,7 +14,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
@@ -42,12 +45,12 @@ public class Application extends SpringBootServletInitializer {
     }
 
     @Bean
-    public FirebaseAuth firebaseAuth() {
-        // TODO: Fill in correct firebase auth
-        InputStream in = Application.class.getResourceAsStream("/firebase-adminsdk.json");
+    public FirebaseAuth firebaseAuth(@Value("${firebase.service-account-key}") String serviceAccountKey,
+                                     @Value("${firebase.database-url}") String databaseUrl) throws IOException {
+        FileInputStream serviceAccount = new FileInputStream(serviceAccountKey);
         FirebaseOptions options = new FirebaseOptions.Builder()
-                .setServiceAccount(in)
-                .setDatabaseUrl("https://mydatabaseurl.firebaseio.com/")
+                .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
+                .setDatabaseUrl(databaseUrl)
                 .build();
 
         FirebaseApp.initializeApp(options);
