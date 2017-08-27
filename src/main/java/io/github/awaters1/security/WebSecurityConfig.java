@@ -21,8 +21,12 @@ import java.util.Collections;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private FirebaseAuthenticationProvider authenticationProvider;
+
+    @Autowired
+    public WebSecurityConfig(FirebaseAuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
 
     @Bean
     @Override
@@ -52,13 +56,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //.and()
         // Custom JWT based security filter
         httpSecurity
-                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(firebaseAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         // disable page caching
         // httpSecurity.headers().cacheControl();
     }
 
-    private FirebaseAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+    private FirebaseAuthenticationTokenFilter firebaseAuthenticationTokenFilter() throws Exception {
         FirebaseAuthenticationTokenFilter authenticationTokenFilter = new FirebaseAuthenticationTokenFilter();
         authenticationTokenFilter.setAuthenticationManager(authenticationManager());
         authenticationTokenFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {

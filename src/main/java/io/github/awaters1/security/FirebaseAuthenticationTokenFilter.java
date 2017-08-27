@@ -4,6 +4,7 @@ import com.google.api.client.util.Strings;
 import io.github.awaters1.security.model.FirebaseAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -13,17 +14,15 @@ import java.io.IOException;
 
 class FirebaseAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter {
 
-    private final static String TOKEN_HEADER = "X-Firebase-Auth";
-
     FirebaseAuthenticationTokenFilter() {
         super("/auth/**");
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        final String authToken = request.getHeader(TOKEN_HEADER);
+        final String authToken = request.getHeader(SecurityHeaders.TOKEN_HEADER);
         if (Strings.isNullOrEmpty(authToken)) {
-            throw new RuntimeException("Invalid auth token");
+            throw new SessionAuthenticationException("Invalid auth token");
         }
 
         return getAuthenticationManager().authenticate(new FirebaseAuthenticationToken(authToken));
