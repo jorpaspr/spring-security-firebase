@@ -1,9 +1,9 @@
 package io.github.awaters1;
 
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseCredentials;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -49,7 +49,7 @@ public class Application extends SpringBootServletInitializer {
                                      @Value("${firebase.database-url}") String databaseUrl) throws IOException {
         FileInputStream serviceAccount = new FileInputStream(serviceAccountKey);
         FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setDatabaseUrl(databaseUrl)
                 .build();
 
